@@ -5,11 +5,14 @@ import android.os.Bundle
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
+import java.util.Calendar;
+import java.util.Date;
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import fr.ceri.gestionfinance.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayoutMediator
+import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +25,24 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(ui.root)
         setData()
+        //tabLayoute
+        val adapter = ViewPagerAdapter(this)
+        ui.page.adapter = adapter
+
+        // Pour lier les onglets et le ViewPager
+        TabLayoutMediator(ui.tabLayout, ui.page) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Revenue continue"
+                1 -> "Revenue courante"
+                2 -> "Dépense continue"
+                3 -> "Dépense courante"
+                else -> null
+            }
+        }.attach()
+
+        val date = SimpleDateFormat("M/yyyy")
+        val dateActuelle = date.format(Date())
+        ui.date.text = dateActuelle.toString()
         // Masquer la barre de statut (status bar) et la barre de navigation
         val decorView = window.decorView
         val uiOptions =

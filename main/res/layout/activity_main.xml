@@ -77,7 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:text="Date"
-
+        android:textSize="50dp"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +88,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="rest"
-
+        android:textSize="20dp"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="@id/cardViewGraph"
         app:layout_constraintTop_toBottomOf="@id/cardViewGraph"
         tools:ignore="InvalidId" />
@@ -96,7 +98,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="eparne"
-        app:layout_constraintLeft_toRightOf="@id/date"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="@id/date"
         app:layout_constraintRight_toLeftOf="@id/coter"
         app:layout_constraintTop_toBottomOf="@id/cardViewGraph"
         tools:ignore="InvalidId" />
@@ -105,6 +109,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:textSize="20dp"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@id/libre"
         app:layout_constraintTop_toBottomOf="@id/cardViewGraph"
         tools:ignore="InvalidId" />
@@ -113,8 +119,62 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:textSize="20dp"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toRightOf="@id/eparne"
         app:layout_constraintTop_toBottomOf="@id/cardViewGraph"
         tools:ignore="InvalidId" />
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ajout revenu/dépense"
+        android:backgroundTint="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@id/eparne"
+        app:layout_constraintLeft_toLeftOf="@id/libre"
+        />
+    <Button
+        android:id="@+id/addEparne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ajout éparne %"
+        android:backgroundTint="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@id/eparne"
+        app:layout_constraintLeft_toRightOf="@id/add"
+        />
+    <TextView
+        android:id="@+id/pourcent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="% éparne"
+        app:layout_constraintRight_toLeftOf="@id/date"
+        app:layout_constraintBottom_toTopOf="@id/cardViewGraph"
+        />
+    <TextView
+        android:id="@+id/pourcentEparne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="0"
+        app:layout_constraintRight_toLeftOf="@id/pourcent"
+        app:layout_constraintBottom_toTopOf="@id/cardViewGraph"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/add"
+        app:layout_constraintBottom_toTopOf="@+id/page"/>
+    <androidx.viewpager2.widget.ViewPager2
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/page"
+        android:layout_width="403dp"
+        android:layout_height="308dp"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="379dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
