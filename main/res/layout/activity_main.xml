@@ -100,7 +100,7 @@
         android:text="eparne"
         android:textSize="20dp"
         android:textColor="@color/black"
-        app:layout_constraintLeft_toLeftOf="@id/date"
+        app:layout_constraintLeft_toLeftOf="@id/addEparne"
         app:layout_constraintRight_toLeftOf="@id/coter"
         app:layout_constraintTop_toBottomOf="@id/cardViewGraph"
         tools:ignore="InvalidId" />
