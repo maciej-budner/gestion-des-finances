@@ -1,17 +1,20 @@
 package fr.ceri.gestionfinance
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.DateUtil
 //excel
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.FileInputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -54,41 +57,74 @@ class BlankFragmentDepenseContinue : Fragment() {
         try {
             val fileStream = java.io.FileInputStream(workingFile)
             val workbook = XSSFWorkbook(fileStream)
-            val sheet = workbook.getSheetAt(1) // On prend la 1ère feuille
-            val date = SimpleDateFormat("M/yyyy")
+
+            // FEUILLE 1 : Dépenses Continues
+            val sheet = workbook.getSheetAt(1)
+
+            val sdf = SimpleDateFormat("M/yyyy", Locale.getDefault())
             val dateActuelle = Date()
-            val resulta = StringBuilder() // Pour accumuler le texte
+            val resulta = StringBuilder()
+
+            // DataFormatter transforme n'importe quel type (Numeric, String, Formula)
+            // en texte sans jamais crasher
+            val formatter = org.apache.poi.ss.usermodel.DataFormatter()
 
             for (row in sheet) {
                 if (row.rowNum == 0) continue
-                val dateDebut = row.getCell(0) ?: continue
 
-                // 2. Récupérer la date correctement peu importe le format Excel
-                val dateBegin: Date? = if (DateUtil.isCellDateFormatted(dateDebut)) {
-                    dateDebut.dateCellValue
-                } else {
-                    // Si c'est du texte "01/2026", on le transforme en Date
-                    try { date.parse(dateDebut.toString()) } catch (e: Exception) { null }
+                val cellDate = row.getCell(0) ?: continue
+                val cellM = row.getCell(1)
+
+                // --- 1. LECTURE DE LA DATE (SÉCURISÉE) ---
+                var dateBegin: Date? = null
+
+                when (cellDate.cellType) {
+                    CellType.NUMERIC -> {
+                        if (DateUtil.isCellDateFormatted(cellDate)) {
+                            dateBegin = cellDate.dateCellValue
+                        }
+                    }
+                    CellType.STRING -> {
+                        try {
+                            // On tente de parser le texte si c'est une string
+                            dateBegin = sdf.parse(cellDate.stringCellValue)
+                        } catch (e: Exception) {
+                            dateBegin = null
+                        }
+                    }
+                    else -> { /* Gérer les autres types si besoin */ }
                 }
 
-                val cellMontant = row.getCell(1) ?: continue
-                // 1. Gestion du Montant (Sécurisée)
-                val montant = when (cellMontant.cellType) {
-                    org.apache.poi.ss.usermodel.CellType.NUMERIC -> cellMontant.numericCellValue.toString()
-                    org.apache.poi.ss.usermodel.CellType.STRING -> cellMontant.stringCellValue
-                    else -> "0.0"
+                // --- 2. LECTURE DU MONTANT ---
+                // Au lieu de formatter.formatCellValue, on va être plus direct
+                val montantDouble = when (cellM?.cellType) {
+                    CellType.NUMERIC -> cellM.numericCellValue
+                    CellType.STRING -> cellM.stringCellValue.replace(",", ".").toDoubleOrNull() ?: 0.0
+                    CellType.FORMULA -> {
+                        // Si c'est une formule, on essaie de récupérer le résultat numérique
+                        try { cellM.numericCellValue } catch (e: Exception) { 0.0 }
+                    }
+                    else -> 0.0
                 }
-                val description = row.getCell(2).toString()
-                // Ici tu peux envoyer 'montant' vers ton graphique !
-                if(dateBegin != null){
-                    if(dateActuelle.after(dateBegin))
-                        resulta.append("$dateDebut -> $description -> $montant \n")}
+                // 3. Lecture Nom et Description (Index 2 et 3)
+                val nom = formatter.formatCellValue(row.getCell(2))
+                val description = formatter.formatCellValue(row.getCell(3))
+
+                // 4. Filtrage et affichage
+                if (dateBegin != null) {
+                    if (dateActuelle.after(dateBegin) || sdf.format(dateActuelle) == sdf.format(dateBegin)) {
+                        resulta.append("${sdf.format(dateBegin)} | $nom | $montantDouble €\n")
+                    }
+                }
             }
-            // 3. ON AFFICHE DANS LE TEXTVIEW
-            textViewDisplay.text = if (resulta.isEmpty()) "Fichier vide" else resulta.toString()
+
+            textViewDisplay.text = if (resulta.isEmpty()) "Aucune donnée trouvée" else resulta.toString()
+
             workbook.close()
             fileStream.close()
         } catch (e: Exception) {
+            // Affiche l'erreur précise dans le Logcat pour debug
+            Log.e("ExcelCrash", "Erreur critique : ${e.message}")
             textViewDisplay.text = "Erreur : ${e.message}"
         }
     }
