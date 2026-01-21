@@ -1,6 +1,5 @@
 package fr.ceri.gestionfinance
 
-import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -18,11 +17,8 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import fr.ceri.gestionfinance.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import org.apache.poi.ss.usermodel.CellType
-import org.apache.poi.ss.usermodel.DateUtil
 import org.apache.poi.ss.usermodel.Sheet
 import java.text.SimpleDateFormat
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -31,8 +27,6 @@ import java.io.FileOutputStream
 import java.lang.Thread.sleep
 import java.util.Calendar
 import java.util.Locale
-import kotlin.math.log
-import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         //tabLayoute
         chargeGrapheTable()
-        sleep(1000)
+
         readExecelFile()
         setData()
         val date = SimpleDateFormat("M/yyyy")
@@ -443,5 +437,38 @@ class MainActivity : AppCompatActivity() {
 
         ui.piechart.animateY(1400) // Animation fluide
         ui.piechart.invalidate() // Rafraîchir
+    }
+
+    fun deleteExcelRow(sheetIndex: Int, rowNum: Int) {
+        try {
+            val inputStream = FileInputStream(workingFile)
+            val workbook = XSSFWorkbook(inputStream)
+            val sheet = workbook.getSheetAt(sheetIndex)
+
+            if (rowNum != null) {
+                var row = sheet.getRow(rowNum)
+                for (i in 0 until 6) {
+                    // 6 correspond à la colonne G (A=0, B=1, C=2, D=3, E=4, F=5, G=6)
+                    if (i == 6) {
+                        continue // On ne touche pas à la colonne G, on passe à la suivante
+                    }
+                    val cell = row.getCell(i)
+                    if (cell != null) {
+                        row.removeCell(cell) // On supprime le contenu de la cellule
+                    }
+                }
+                val outputStream = FileOutputStream(workingFile)
+                workbook.write(outputStream)
+                outputStream.close()
+            }
+            workbook.close()
+            inputStream.close()
+            sleep(1000)
+            readExecelFile()
+            chargeGrapheTable()
+            setData()
+        } catch (e: Exception) {
+            Log.e("ExcelDelete", "Erreur : ${e.message}")
+        }
     }
 }

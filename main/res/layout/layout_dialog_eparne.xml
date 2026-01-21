@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp">
 
     <LinearLayout
@@ -13,12 +12,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ajouter une éparne"
+            android:text="@string/ajouter_une_parne"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="10dp"/>
 
-        <EditText android:id="@+id/editMontant" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Combien (%)" android:inputType="numberDecimal" />
+        <EditText android:id="@+id/editMontant" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/combien" android:inputType="numberDecimal" />
         <Button
             android:id="@+id/btnValider"
             android:layout_width="wrap_content"

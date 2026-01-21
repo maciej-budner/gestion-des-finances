@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ZarządzanieFinansami</string>
+    <string name="d_penses">wydatki</string>
+    <string name="gains">zyski</string>
+    <string name="eparne">oszczędności</string>
+    <string name="ajout_revenu_d_pense">dodatek zyski/wydatki</string>
+    <string name="ajout_parne">dodatek oszczędności</string>
+    <string name="parne">% oszczędności</string>
+    <string name="date_fin_m_yyyy_falcultatif">Data zakończenia - fakultatywny</string>
+    <string name="date_d_but_m_yyyy">Data początek</string>
+    <string name="combien">ile</string>
+    <string name="description">opis - fakultatywny</string>
+    <string name="nom">nazwa</string>
+    <string name="gain_continu">zyski Kontynuawać</string>
+    <string name="gain_courant">zyski bieżący</string>
+    <string name="d_pense_continue">wydatki Kontynuawać</string>
+    <string name="d_pense_courante">wydatki bieżący</string>
+    <string name="ajouter_une_op_ration">dodaj operację</string>
+    <string name="ajouter_une_parne">dodaj % oszczędności</string>
+    <string name="dolar">Zl</string>
+    <string name="rest">reszta</string>
+</resources>

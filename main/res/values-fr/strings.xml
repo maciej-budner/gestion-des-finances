@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GestionFinance</string>
+    <string name="d_penses">Dépenses</string>
+    <string name="gains">gains</string>
+    <string name="eparne">épargne</string>
+    <string name="ajout_revenu_d_pense">ajout revenu/dépense</string>
+    <string name="ajout_parne">ajout éparne %</string>
+    <string name="parne">"% éparne "</string>
+    <string name="date_fin_m_yyyy_falcultatif">Date Fin (M/yyyy)- falcultatif</string>
+    <string name="date_d_but_m_yyyy">Date Début (M/yyyy)</string>
+    <string name="combien">Combien (€)</string>
+    <string name="description">Description - falcultatif</string>
+    <string name="nom">Nom</string>
+    <string name="gain_continu">Gain Continu</string>
+    <string name="gain_courant">Gain Courant</string>
+    <string name="d_pense_continue">Dépense Continue</string>
+    <string name="d_pense_courante">Dépense Courante</string>
+    <string name="ajouter_une_op_ration">Ajouter une opération</string>
+    <string name="ajouter_une_parne">Ajouter une éparne</string>
+    <string name="dolar">"€ "</string>
+    <string name="rest">rest</string>
+</resources>

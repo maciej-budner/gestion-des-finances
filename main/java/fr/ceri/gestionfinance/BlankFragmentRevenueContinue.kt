@@ -6,13 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.DateUtil
 
 // excel
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.FileInputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,7 +32,7 @@ class BlankFragmentRevenueContinue : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var workingFile: java.io.File
-    private lateinit var textViewDisplay: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +48,13 @@ class BlankFragmentRevenueContinue : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_blank_revenue_continue, container, false)
-        // 2. On récupère la référence du TextView
-        textViewDisplay = view.findViewById(R.id.textViewExcelData)
         return view
     }
 
     fun readExecelFile() {
         if (!workingFile.exists()) return
         try {
+            val operations = mutableListOf<Operation>()
             val fileStream = java.io.FileInputStream(workingFile)
             val workbook = XSSFWorkbook(fileStream)
 
@@ -108,26 +108,40 @@ class BlankFragmentRevenueContinue : Fragment() {
                 }
                 // 3. Lecture Nom et Description (Index 2 et 3)
                 val nom = formatter.formatCellValue(row.getCell(2))
-                val description = formatter.formatCellValue(row.getCell(3))
 
                 // 4. Filtrage et affichage
                 if (dateBegin != null) {
                     if (sdf.format(dateActuelle) == sdf.format(dateBegin)) {
-                        resulta.append("${sdf.format(dateBegin)} | $nom | $montantDouble €\n")
+                        operations.add(Operation("${sdf.format(dateBegin)} | $nom | $montantDouble", row.rowNum))
                     }
                 }
             }
-
-            textViewDisplay.text = if (resulta.isEmpty()) "Aucune donnée trouvée" else resulta.toString()
+            // Configurer la RecyclerView
+            val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewData)
+            recyclerView?.layoutManager = LinearLayoutManager(context)
+            recyclerView?.adapter = OperationAdapter(operations) { operation ->
+                confirmDelete(operation, 3)
+            }
 
             workbook.close()
             fileStream.close()
         } catch (e: Exception) {
             // Affiche l'erreur précise dans le Logcat pour debug
             Log.e("ExcelCrash", "Erreur critique : ${e.message}")
-            textViewDisplay.text = "Erreur : ${e.message}"
         }
     }
+
+    private fun confirmDelete(op: Operation, sheetIdx: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Supprimer")
+            .setMessage("Voulez-vous supprimer ${op.txt} ?")
+            .setPositiveButton("Oui") { _, _ ->
+                (activity as MainActivity).deleteExcelRow(sheetIdx, op.index)
+                readExecelFile() // Recharge la liste
+            }
+            .setNegativeButton("Non", null).show()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

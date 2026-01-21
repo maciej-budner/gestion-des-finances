@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp">
 
     <LinearLayout
@@ -13,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ajouter une opération"
+            android:text="@string/ajouter_une_op_ration"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingBottom="10dp"/>
@@ -23,18 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <RadioButton android:id="@+id/radioGainCont" android:text="Gain Continu"  android:layout_height="50dp" android:layout_width="wrap_content"/>
-            <RadioButton android:id="@+id/radioGainCour" android:text="Gain Courant" android:layout_height="50dp" android:layout_width="wrap_content"/>
-            <RadioButton android:id="@+id/radioDepCont" android:text="Dépense Continue" android:layout_height="50dp" android:layout_width="wrap_content"/>
-            <RadioButton android:id="@+id/radioDepCour" android:text="Dépense Courante" android:layout_height="50dp" android:layout_width="wrap_content"/>
+            <RadioButton android:id="@+id/radioGainCont" android:text="@string/gain_continu"  android:layout_height="50dp" android:layout_width="wrap_content"/>
+            <RadioButton android:id="@+id/radioGainCour" android:text="@string/gain_courant" android:layout_height="50dp" android:layout_width="wrap_content"/>
+            <RadioButton android:id="@+id/radioDepCont" android:text="@string/d_pense_continue" android:layout_height="50dp" android:layout_width="wrap_content"/>
+            <RadioButton android:id="@+id/radioDepCour" android:text="@string/d_pense_courante" android:layout_height="50dp" android:layout_width="wrap_content"/>
         </RadioGroup>
 
-        <EditText android:id="@+id/editNom" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Nom" />
-        <EditText android:id="@+id/editDescription" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Description" />
-        <EditText android:id="@+id/editMontant" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Combien (€)" android:inputType="numberDecimal" />
+        <EditText android:id="@+id/editNom" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/nom" />
+        <EditText android:id="@+id/editDescription" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/description" />
+        <EditText android:id="@+id/editMontant" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/combien" android:inputType="numberDecimal" />
 
-        <EditText android:id="@+id/editDateDebut" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Date Début (M/yyyy)" />
-        <EditText android:id="@+id/editDateFin" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Date Fin (M/yyyy)- falcultatif" />
+        <EditText android:id="@+id/editDateDebut" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/date_d_but_m_yyyy" />
+        <EditText android:id="@+id/editDateFin" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/date_fin_m_yyyy_falcultatif" />
         <Button
             android:id="@+id/btnValider"
             android:layout_width="wrap_content"

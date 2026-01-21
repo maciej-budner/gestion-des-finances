@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
+    android:background="@drawable/degrader"
     tools:context=".MainActivity">
 
     <androidx.cardview.widget.CardView
@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Dépenses" />
+                        android:text="@string/d_penses" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -66,7 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Gains" />
+                        android:text="@string/gains" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -87,7 +87,7 @@
         android:id="@+id/libre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rest"
+        android:text="@string/rest"
         android:textSize="20dp"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="@id/cardViewGraph"
@@ -97,7 +97,7 @@
         android:id="@+id/eparne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="eparne"
+        android:text="@string/eparne"
         android:textSize="20dp"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="@id/addEparne"
@@ -128,7 +128,7 @@
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ajout revenu/dépense"
+        android:text="@string/ajout_revenu_d_pense"
         android:backgroundTint="@color/colorAccent"
         app:layout_constraintTop_toBottomOf="@id/eparne"
         app:layout_constraintLeft_toLeftOf="@id/libre"
@@ -137,7 +137,7 @@
         android:id="@+id/addEparne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ajout éparne %"
+        android:text="@string/ajout_parne"
         android:backgroundTint="@color/colorAccent"
         app:layout_constraintTop_toBottomOf="@id/eparne"
         app:layout_constraintLeft_toRightOf="@id/add"
@@ -147,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="% éparne"
+        android:text="@string/parne"
         app:layout_constraintRight_toLeftOf="@id/date"
         app:layout_constraintBottom_toTopOf="@id/cardViewGraph"
         />

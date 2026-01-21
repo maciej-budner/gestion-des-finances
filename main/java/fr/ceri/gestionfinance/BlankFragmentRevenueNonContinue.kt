@@ -1,16 +1,18 @@
 package fr.ceri.gestionfinance
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.DateUtil
 //excel
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.FileInputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,7 +32,6 @@ class BlankFragmentRevenueNonContinue : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var workingFile: java.io.File
-    private lateinit var textViewDisplay: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,19 +47,17 @@ class BlankFragmentRevenueNonContinue : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_blank_revenue_non_continue, container, false)
-        // 2. On récupère la référence du TextView
-        textViewDisplay = view.findViewById(R.id.textViewExcelData)
         return view
     }
     fun readExecelFile() {
         if (!workingFile.exists()) return
         try {
+            val operations = mutableListOf<Operation>()
             val fileStream = java.io.FileInputStream(workingFile)
             val workbook = XSSFWorkbook(fileStream)
             val sheet = workbook.getSheetAt(4) // On prend la 1ère feuille
             val sdf = SimpleDateFormat("M/yyyy", Locale.getDefault())
             val dateActuelle = Date()
-            val resulta = StringBuilder() // Pour accumuler le texte
 
             // DataFormatter transforme n'importe quel type (Numeric, String, Formula)
             // en texte sans jamais crasher
@@ -121,31 +120,53 @@ class BlankFragmentRevenueNonContinue : Fragment() {
 
                 // 3. Lecture Nom et Description (Index 2 et 3)
                 val nom = formatter.formatCellValue(row.getCell(3))
-                val description = formatter.formatCellValue(row.getCell(4))
-
 
                 if(dateBegin != null && dateEnd != null){
                     if(dateActuelle.after(dateEnd)){
                         // suprimmer donner
-                        sheet.removeRow(row)
+                        // On parcourt toutes les cellules de la ligne
+                        for (i in 0 until 6) {
+                            // 6 correspond à la colonne G (A=0, B=1, C=2, D=3, E=4, F=5, G=6)
+                            if (i == 6) {
+                                continue // On ne touche pas à la colonne G, on passe à la suivante
+                            }
+                            val cell = row.getCell(i)
+                            if (cell != null) {
+                                row.removeCell(cell) // On supprime le contenu de la cellule
+                            }
+                        }
                     }
                     else if(dateActuelle.after(dateBegin) && dateActuelle.before(dateEnd)){
                         // Ici tu peux envoyer 'montant' vers ton graphique !
-                        resulta.append("date fin:${sdf.format(dateEnd)} | $nom | $montantDouble €\n")
+                        operations.add(Operation("fin:${sdf.format(dateEnd)} | $nom | $montantDouble", row.rowNum))
                     }
                     else{continue}
                 }
 
             }
 
-            // 3. ON AFFICHE DANS LE TEXTVIEW
-            textViewDisplay.text = if (resulta.isEmpty()) "Aucune donnée trouvée" else resulta.toString()
-
+            // Configurer la RecyclerView
+            val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewData)
+            recyclerView?.layoutManager = LinearLayoutManager(context)
+            recyclerView?.adapter = OperationAdapter(operations) { operation ->
+                confirmDelete(operation, 4)
+            }
             workbook.close()
             fileStream.close()
         } catch (e: Exception) {
-            textViewDisplay.text = "Erreur : ${e.message}"
+            Log.e("Erreur","Erreur : ${e.message}")
         }
+    }
+
+    private fun confirmDelete(op: Operation, sheetIdx: Int) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Supprimer")
+            .setMessage("Voulez-vous supprimer ${op.txt} ?")
+            .setPositiveButton("Oui") { _, _ ->
+                (activity as MainActivity).deleteExcelRow(sheetIdx, op.index)
+                readExecelFile() // Recharge la liste
+            }
+            .setNegativeButton("Non", null).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -188,7 +209,7 @@ class BlankFragmentRevenueNonContinue : Fragment() {
             workbook.close()
             fileStream.close()
         } catch (e: Exception) {
-            textViewDisplay.text = "Erreur : ${e.message}"
+            Log.e("Erreur","Erreur : ${e.message}")
         }
     }
     private fun prepareWorkingFile() {

@@ -1,5 +1,24 @@
 <resources>
-    <string name="app_name">GestionFinance</string>
+    <string name="app_name">Management</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="d_penses">Spend</string>
+    <string name="gains">Bénéfice</string>
+    <string name="eparne">savings</string>
+    <string name="ajout_revenu_d_pense">add revenu/spend</string>
+    <string name="ajout_parne">add savings %</string>
+    <string name="parne">% savings</string>
+    <string name="date_fin_m_yyyy_falcultatif">Date end (M/yyyy)- optional</string>
+    <string name="date_d_but_m_yyyy">Date Begin (M/yyyy)</string>
+    <string name="combien">How much ($)</string>
+    <string name="description">Description- optional</string>
+    <string name="nom">name</string>
+    <string name="gain_continu">Bénéfice Continu</string>
+    <string name="gain_courant">Bénéfice over</string>
+    <string name="d_pense_continue">Spend Continu</string>
+    <string name="d_pense_courante">Spend over</string>
+    <string name="ajouter_une_op_ration">Add opération</string>
+    <string name="ajouter_une_parne">Add % saving</string>
+    <string name="dolar">$</string>
+    <string name="rest">remains</string>
 </resources>
