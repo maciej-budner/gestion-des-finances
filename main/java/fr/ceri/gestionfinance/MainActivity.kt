@@ -110,9 +110,12 @@ class MainActivity : AppCompatActivity() {
         }
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.radioDepCour || checkedId == R.id.radioGainCour) {
+
                 editDateFin.visibility = View.VISIBLE
+                editDateDebut.visibility = View.VISIBLE
             } else {
                 editDateFin.visibility = View.GONE
+                editDateDebut.visibility = View.GONE
             }
         }
         dialog.show()
@@ -120,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         btnPositive.setOnClickListener {
             val selectedId = radioGroup.checkedRadioButtonId
             val nom = editNom.text.toString().trim()
-            val dateDeb = editDateDebut.text.toString().trim()
+            var dateDeb = editDateDebut.text.toString().trim()
             val dateFin = editDateFin.text.toString().trim()
             val montantStr = editMontant.text.toString().trim()
 
@@ -147,11 +150,7 @@ class MainActivity : AppCompatActivity() {
                 isValid = false
             }
 
-            // 4. Vérification Date Début
-            if (!dateDeb.matches(dateRegex)) {
-                editDateDebut.error = "Format invalide (M/yyyy)"
-                isValid = false
-            }
+
             if ((montantStr.toDoubleOrNull() ?: 0.0) < 0) {
                 editMontant.error = "Montant négatif, il doit être positif"
                 isValid = false
@@ -171,8 +170,18 @@ class MainActivity : AppCompatActivity() {
                 isValid = false
             }
 
+                // 4. Vérification Date Début
+            if ((feuilleCible == 2 || feuilleCible == 4) && !dateDeb.matches(dateRegex) && !dateDeb.isEmpty()) {
+                editDateDebut.error = "Format invalide (M/yyyy)"
+                isValid = false
+            }
+
             // SI TOUT EST OK
             if (isValid) {
+                if(feuilleCible == 1 || feuilleCible == 3){
+                    val date = SimpleDateFormat("M/yyyy")
+                    dateDeb = date.format(Date()).toString()
+                }
                 val montantBrut = editMontant.text.toString().replace(",", ".") // Remplace virgule par point
                 val montant = montantBrut.toDoubleOrNull() ?: 0.0
                 saveToExcel(
