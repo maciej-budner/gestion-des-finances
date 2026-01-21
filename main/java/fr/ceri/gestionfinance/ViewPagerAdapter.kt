@@ -17,7 +17,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapte
             0 -> BlankFragmentRevenueContinue() // Ta page avec le graphique
             1 -> BlankFragmentRevenueNonContinue() // Ta page futures dépenses
             2 -> BlankFragmentDepenseContinue() // Ta page futurs gains
-            3 -> BlankFragmentDepenseContinue() // Ta page prévisions
+            3 -> BlankFragmentDepenseNonContinue() // Ta page prévisions
             else -> BlankFragmentRevenueContinue()
         }
     }

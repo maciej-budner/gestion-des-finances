@@ -68,7 +68,7 @@ class BlankFragmentDepenseContinue : Fragment() {
             // DataFormatter transforme n'importe quel type (Numeric, String, Formula)
             // en texte sans jamais crasher
             val formatter = org.apache.poi.ss.usermodel.DataFormatter()
-
+            Log.e("ExcelSave", "lit  depence continue")
             for (row in sheet) {
                 if (row.rowNum == 0) continue
 

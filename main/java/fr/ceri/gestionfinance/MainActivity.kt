@@ -48,11 +48,12 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(ui.root)
         prepareWorkingFile()
-        readExecelFile()
-        setData()
+
         //tabLayoute
         chargeGrapheTable()
-
+        sleep(1000)
+        readExecelFile()
+        setData()
         val date = SimpleDateFormat("M/yyyy")
         val dateActuelle = date.format(Date())
         ui.date.text = dateActuelle.toString()

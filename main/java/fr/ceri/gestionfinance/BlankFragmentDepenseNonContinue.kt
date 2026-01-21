@@ -1,6 +1,7 @@
 package fr.ceri.gestionfinance
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -65,7 +66,7 @@ class BlankFragmentDepenseNonContinue : Fragment() {
             // DataFormatter transforme n'importe quel type (Numeric, String, Formula)
             // en texte sans jamais crasher
             val formatter = org.apache.poi.ss.usermodel.DataFormatter()
-
+            Log.e("ExcelSave", "lit non depence courant")
             for (row in sheet) {
                 if (row.rowNum == 0) continue
                 val date_debut = row.getCell(0) ?: continue
@@ -125,7 +126,7 @@ class BlankFragmentDepenseNonContinue : Fragment() {
                 val nom = formatter.formatCellValue(row.getCell(3))
                 val description = formatter.formatCellValue(row.getCell(4))
 
-
+                Log.e("ExcelSave", "date fin:${sdf.format(dateEnd)} | $nom | $montantDouble €")
                 if(dateBegin != null && dateEnd != null){
                     if(dateActuelle.after(dateEnd)){
                         // suprimmer donner
