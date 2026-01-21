@@ -153,7 +153,7 @@ class BlankFragmentDepenseNonContinue : Fragment() {
             val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewData)
             recyclerView?.layoutManager = LinearLayoutManager(context)
             recyclerView?.adapter = OperationAdapter(operations) { operation ->
-                confirmDelete(operation, 4)
+                confirmDelete(operation, 2)
             }
 
             workbook.close()
