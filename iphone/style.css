@@ -1,0 +1,153 @@
+@media (max-width: 600px) {
+  .card {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  canvas {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (min-width: 900px) {
+  body {
+    max-width: 900px;
+    margin: auto;
+  }
+}
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg,#0f2027,#203a43,#2c5364);
+  color: white;
+}
+
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: #111;
+  padding: 30px;
+  border-radius: 16px;
+  width: 300px;
+  box-shadow: 0 0 20px rgba(0,255,200,0.3);
+}
+
+input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #00c9a7;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: transparent;
+  border: 1px solid #00c9a7;
+  color: #00c9a7;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+header {
+  text-align: center;
+  margin: 20px;
+}
+
+.card {
+  background: #1b1b1b;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.list {
+  padding: 20px;
+}
+
+.item {
+  background: linear-gradient(90deg,#a8edea,#fed6e3);
+  color: black;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(0,201,167,0.6);
+}
+
+.item {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #111;
+  padding: 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 320px;
+}
+
+.hidden {
+  display: none;
+}
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion</title>
+  <link rel="stylesheet" href="iphone/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00c9a7">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="auth">
+
+  <div class="card">
+    <h1>Gestion Budget</h1>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mot de passe">
+    <input id="nom" placeholder="Nom (inscription)">
+    <input id="prenom" placeholder="Prénom (inscription)">
+
+    <button onclick="login()">Connexion</button>
+    <button class="secondary" onclick="register()">Inscription</button>
+
+    <p id="msg"></p>
+  </div>
+
+<script src="iphone/app.js"></script>
+</body>
+</html>
