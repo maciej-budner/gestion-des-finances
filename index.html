@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Connexion</title>
-  <link rel="stylesheet" href="iphone/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#00c9a7">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Finance App - Login</title>
+    <link rel="stylesheet" href="iphone/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .hide { display: none !important; }
+    </style>
 </head>
-<body class="auth">
+<body>
+    <div class="app-container">
+        <h1>Gestion Finance</h1>
+        
+        <div class="card" id="login-card">
+            <h2>Connexion</h2>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required autocomplete="username">
+                <input type="password" id="login-password" placeholder="Mot de passe" required autocomplete="current-password">
+                <button type="submit">Se connecter</button>
+            </form>
+            <p style="text-align:center;">ou</p>
+            <button id="show-register" class="secondary">Créer un compte</button>
+        </div>
 
-  <div class="card">
-    <h1>Gestion Budget</h1>
+        <div class="card hide" id="register-card">
+            <h2>Inscription</h2>
+            <form id="register-form">
+                <input type="text" id="register-nom" placeholder="Nom" required>
+                <input type="text" id="register-prenom" placeholder="Prénom" required>
+                <input type="email" id="register-email" placeholder="Email" required autocomplete="username">
+                <input type="password" id="register-password" placeholder="Mot de passe" required autocomplete="new-password">
+                <button type="submit">S'inscrire</button>
+            </form>
+            <button id="show-login" class="secondary">Déjà un compte ?</button>
+        </div>
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Mot de passe">
-    <input id="nom" placeholder="Nom (inscription)">
-    <input id="prenom" placeholder="Prénom (inscription)">
+        <div id="error-message" class="card hide" style="background:var(--danger); color: white; padding: 10px; margin-top: 10px;"></div>
+    </div>
 
-    <button onclick="login()">Connexion</button>
-    <button class="secondary" onclick="register()">Inscription</button>
-
-    <p id="msg"></p>
-  </div>
-
-<script src="iphone/app.js"></script>
+    <script src="iphone/app.js"></script>
 </body>
 </html>

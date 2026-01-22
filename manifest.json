@@ -3,8 +3,9 @@
   "short_name": "Finance",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#0f2027",
-  "theme_color": "#00c9a7",
+  "background_color": "#101820",
+  "theme_color": "#00bfae",
+  "description": "Application de gestion des finances personnelle, alternative iPhone.",
   "icons": [
     {
       "src": "iphone/icon.png",

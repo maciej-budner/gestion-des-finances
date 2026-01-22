@@ -2,74 +2,70 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Gestion Budget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Dashboard - Gestion Finance</title>
+  <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="manifest" href="../manifest.json">
-  <meta name="theme-color" content="#00c9a7">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <div class="app-container">
+    <h1>Tableau de bord</h1>
+    
+    <div class="card flex-between">
+        <div class="donut-container">
+            <canvas id="financeChart"></canvas>
+        </div>
+        <div>
+            <div style="color: var(--gray)">Épargne: <span id="val-eparne" style="color:white; font-weight:bold">0%</span></div>
+            <div style="color: var(--gray)">Reste: <span id="val-reste" style="color:var(--accent); font-weight:bold">0€</span></div>
+            <div style="color: var(--gray)">Mis de côté: <span id="val-montant-eparne" style="color:var(--blue); font-weight:bold">0€</span></div>
+            <div style="color: var(--gray)">Dépenses: <span id="val-total-dep" style="color:var(--danger); font-weight:bold">0€</span></div>
+        </div>
+    </div>
 
-<header>
-  <h1 id="month">1 / 2026</h1>
-  <p id="epargneTxt">Épargne : 0 %</p>
-</header>
+    <div class="card">
+    <div class="tabs-bar">
+        <button class="tab-btn active" onclick="switchTab(event, 'gain_continue')">Revenue fixe</button>
+        <button class="tab-btn" onclick="switchTab(event, 'gain_courant')">Revenue courant</button>
+        <button class="tab-btn" onclick="switchTab(event, 'depence_continue')">Dépense fixe</button>
+        <button class="tab-btn" onclick="switchTab(event, 'depence_courant')">Dépense courant</button>
+    </div>
 
-<section class="card">
-  <canvas id="donut" width="220" height="220"></canvas>
-
-  <div class="stats">
-    <p>Reste : <span id="reste">0</span> €</p>
-    <p>Épargne : <span id="epargneMontant">0</span> €</p>
-  </div>
-
-  <div class="actions">
-    <button onclick="openEpargne()">Ajouter épargne %</button>
-    <button onclick="openAdd()">Ajouter gain / dépense</button>
-  </div>
-</section>
-
-<section class="list">
-  <h2>Historique</h2>
-  <div id="items"></div>
-</section>
-
-<!-- Modal Épargne -->
-<div id="modalEpargne" class="modal hidden">
-  <div class="modal-content">
-    <h2>Épargne (%)</h2>
-    <input id="epargneInput" type="number" min="0" max="100" step="0.1">
-    <button onclick="saveEpargne()">Valider</button>
-    <button class="secondary" onclick="closeModal()">Annuler</button>
-  </div>
+    <div id="list-container-tabs"></div>
 </div>
 
-<!-- Modal Gain / Dépense -->
-<div id="modalAdd" class="modal hidden">
-  <div class="modal-content">
-    <h2>Ajouter</h2>
-
-    <select id="type">
-      <option value="depence_continue">Dépense continue</option>
-      <option value="depence_courant">Dépense courante</option>
-      <option value="gain_continue">Gain continu</option>
-      <option value="gain_courant">Gain courant</option>
-    </select>
-
-    <input id="nom" placeholder="Nom">
-    <input id="montant" type="number" step="0.01" placeholder="Montant">
-
-    <input id="dateDebut" type="date" class="hidden">
-
-    <button onclick="saveItem()">Ajouter</button>
-    <button class="secondary" onclick="closeModal()">Annuler</button>
-  </div>
+    <div class="flex-row">
+        <button onclick="addEparne()">Épargne %</button>
+        <button onclick="openAddModal()">Ajouter</button>
+    </div>
 </div>
 
-
-<script src="dashboard.js"></script>
-
+<div id="modalAdd" class="modal hide">
+    <div class="modal-content">
+        <h3>Ajouter</h3>
+        <div class="radio-grid">
+            <label><input type="radio" name="op-type" value="depence_continue" checked onchange="toggleDateFields(false)"> dépense continue</label>
+            <label><input type="radio" name="op-type" value="depence_courant" onchange="toggleDateFields(true)"> dépense courant</label>
+            <label><input type="radio" name="op-type" value="gain_continue" onchange="toggleDateFields(false)"> gain continue</label>
+            <label><input type="radio" name="op-type" value="gain_courant" onchange="toggleDateFields(true)">gain courant </label>
+        </div>
+        <input type="text" id="op-nom" placeholder="Nom">
+        <input type="number" id="op-montant" placeholder="Montant">
+        
+        <div id="date-group" class="hide">
+            <input type="date" id="op-debut">
+            <input type="date" id="op-fin">
+        </div>
+        
+        <button onclick="saveOperation()">Valider</button>
+        <button onclick="closeModal()" class="secondary">Annuler</button>
+    </div>
+</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
