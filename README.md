@@ -74,7 +74,9 @@ Afin d’éviter l’ouverture du fichier Excel alors qu’il n’est pas encore
 
 Dans cette page web, vous pouvez suivre votre budget grâce à un graphique en forme de donut qui affiche vos dépenses et vos gains.
 vous serai diriger sur la page de connection où en peut s'inscrire.
+
 <img src="connection.png" width="200" height="400"/>
+
 Vous disposez également d’une gestion de l’épargne, qui vous indique combien vous devez mettre de côté pour le mois en cours. Cette valeur se met automatiquement à jour en fonction des gains et des dépenses que vous ajoutez.
 
 Il y a aussi une section correspondant à ce qu’il vous reste, considérée comme un budget plaisir.
@@ -93,9 +95,8 @@ Chaque bouton ouvre une fenêtre contenant un formulaire à remplir.
 
 Voici à quoi ressemble le bouton pour ajouter un gain ou une dépense :
 
-<img src="ajoue1.png" width="200" height="400"/> <img src="Screenshot_20260121_205852_Management.jpg" width="200" height="400"/>
+<img src="ajoue1.png" width="200" height="400"/> <img src="ajoue2.png" width="200" height="400"/>
 
-<img src="ajoue2.png" width="200" height="400"/> <img src="Screenshot_20260121_205852_Management.jpg" width="200" height="400"/>
 S’il y a une erreur dans le formulaire, celui-ci ne pourra pas être validé et les erreurs seront indiquées à l’écran.
 
 <img src="erreur.png" width="200" height="400"/>
@@ -103,6 +104,7 @@ S’il y a une erreur dans le formulaire, celui-ci ne pourra pas être validé e
 Le fonctionnement est similaire pour l’épargne, mais avec une seule donnée à renseigner :
 
 <img src="ajoueEparne.png" width="200" height="400"/>
+
 # Futures améliorations
 
 - Dans le fichier Excel, une colonne permet déjà de calculer la quantité épargnée. Cela permettra plus tard d’afficher le montant total qui aurait dû être mis de côté depuis l’ajout du pourcentage d’épargne.
